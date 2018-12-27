@@ -1,9 +1,13 @@
 {
-  "name": "create-next-example-app",
+  "name": "Grid Project",
+  "version": "1.0.0",
+  "author": "Juncheng",
+  "license": "MIT",
   "scripts": {
-    "dev": "next",
+    "dev": "node app.js",
     "build": "next build",
-    "start": "next start"
+    "start": "node app.js",
+    "postinstall": "next build"
   },
   "dependencies": {
     "@material-ui/core": "^3.7.1",
