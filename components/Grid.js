@@ -1,8 +1,39 @@
 import React from "react";
 import PropTypes from 'prop-types';
 
-
 import {Table,TableHead,TableRow,TableBody,TableCell} from '@material-ui/core';
+
+import { withStyles } from '@material-ui/core/styles';
+import classNames from 'classnames';
+
+const tableStyles = theme => ({
+  Responsive: {
+    width: "100%",
+    marginTop: theme.spacing.unit * 3,
+    overflowX: "auto"
+  },
+  table: {
+    marginBottom: "0",
+    width: "100%",
+    maxWidth: "100%",
+    backgroundColor: "transparent",
+    borderSpacing: "0",
+    borderCollapse: "collapse"
+  },
+  tableCell: {
+    lineHeight: "1.42857143",
+    padding: "12px 8px",
+    verticalAlign: "middle"
+  },
+  tableHeadCell: {
+    color: "inherit",
+    fontSize: "1em"
+  },
+  tableHeadBackGroundColor:{
+    backgroundColor: "#2196f3"
+  },
+})
+
 
 class Grid extends React.Component{
   constructor(props){
@@ -20,6 +51,7 @@ class Grid extends React.Component{
     const TableHeader = this.tableHeader.map((prop,key)=>{
       return (
         <TableCell
+          className={classNames(this.classes.tableCell, this.classes.tableHeadCell)}
           key={key}
         >
           {prop}
@@ -33,6 +65,7 @@ class Grid extends React.Component{
           {props.map((prop,key)=>{
             return(
               <TableCell
+                className={this.classes.tableCell}
                 key={key}
               >
                 {prop}
@@ -45,9 +78,9 @@ class Grid extends React.Component{
 
     return(
       <>
-        <div>
-          <Table>
-            <TableHead>
+        <div className={this.classes.Responsive}>
+          <Table className={this.classes.table}>
+            <TableHead className={this.classes.tableHeadBackGroundColor}>
               <TableRow>
                 {TableHeader}
               </TableRow>
@@ -67,4 +100,4 @@ Grid.propTypes = {
   tableData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
 }
 
-export default Grid;
+export default withStyles(tableStyles)(Grid);
