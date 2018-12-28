@@ -39,8 +39,6 @@ class Grid extends React.Component{
   constructor(props){
     super(props);
     this.classes = props.classes;
-    this.tableHeader = props.tableHeader;
-    this.tableData = props.tableData;
   };
 
   componentDidMount () {}
@@ -48,7 +46,7 @@ class Grid extends React.Component{
   componentWillUnmount () {}
 
   render(){
-    const TableHeader = this.tableHeader.map((prop,key)=>{
+    const TableHeader = this.props.tableHeader.map((prop,key)=>{
       return (
         <TableCell
           className={classNames(this.classes.tableCell, this.classes.tableHeadCell)}
@@ -59,7 +57,7 @@ class Grid extends React.Component{
       )
     });
 
-    const TableData = this.tableData.map((props,key)=>{
+    const TableData = this.props.tableData.map((props,key)=>{
       return(
         <TableRow key={key}>
           {props.map((prop,key)=>{
