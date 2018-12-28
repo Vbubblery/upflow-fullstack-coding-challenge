@@ -8,30 +8,24 @@ import Layout from '../components/Layout';
 import Grid from '../components/Grid';
 import CSVReader from "react-csv-reader";
 
-const tableHeader = ["sepal_length", "sepal_width", "petal_length", "petal_width","species"];
-
-const tableData = [["5.1","3.5","1.4","0.2","Iris-setosa"],
-                   ["4.9","3","1.4","0.2","Iris-setosa"],
-                   ["4.7","3.2","1.3","0.2","Iris-setosa"],
-                   ["4.6","3.1","1.5","0.2","Iris-setosa"],
-                   ["5.1","3.5","1.4","0.2","Iris-setosa"],
-                   ["4.9","3","1.4","0.2","Iris-setosa"],
-                   ["4.7","3.2","1.3","0.2","Iris-setosa"],
-                   ["4.6","3.1","1.5","0.2","Iris-setosa"],
-                   ["5.1","3.5","1.4","0.2","Iris-setosa"],
-                   ["4.9","3","1.4","0.2","Iris-setosa"],
-                   ["4.7","3.2","1.3","0.2","Iris-setosa"],
-                   ["4.6","3.1","1.5","0.2","Iris-setosa"],]
+import {connect} from 'react-redux';
 
 const handleForce = data => console.log(data);
 
-const Index = () => (
+const Index = (props) => (
   <Layout>
     <CSVReader
       onFileLoaded={handleForce}
     />
-    <Grid tableHeader={tableHeader} tableData={tableData} />
+    <Grid tableHeader={props.gridPage.data.header} tableData={props.gridPage.data.body} />
   </Layout>
 )
 
-export default Index
+function mapStateToProps (state) {
+
+  const {gridPage} = state;
+  return gridPage
+}
+
+
+export default connect(mapStateToProps)(Index)
