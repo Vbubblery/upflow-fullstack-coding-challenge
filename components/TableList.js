@@ -3,6 +3,7 @@ import React from "react";
 // components
 import Grid from './Grid';
 import CSVReader from "react-csv-reader";
+import {Button} from '@material-ui/core';
 
 // redux connect
 import {connect} from 'react-redux';
@@ -29,7 +30,14 @@ class TableList extends React.Component{
       <>
       <CSVReader
         onFileLoaded={this.handleForce}
+        inputStyle={{display: 'none'}}
+        inputId="csv-reader"
       />
+      <label htmlFor="csv-reader">
+        <Button variant="contained" component="span">
+          Upload CSV
+        </Button>
+      </label>
       <Grid tableHeader={this.props.gridPage.data.header} tableData={this.props.gridPage.data.body} />
       </>
     )
