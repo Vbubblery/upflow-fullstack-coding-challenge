@@ -15,12 +15,13 @@ class GridBody extends React.Component{
   componentWillUnmount () {}
 
 
-
   render(){
-    const {tableData,tableHeader} = this.props;
+    const {tableData,tableHeader,rowsPerPage,page} = this.props;
+    //const emptyRows = rowsPerPage - Math.min(rowsPerPage, tableData.length - page * rowsPerPage);
     return(
       <TableBody>
         {tableData
+          .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
           .map((row,key)=>{
             return(
               <TableRow hover key={key}>
@@ -30,9 +31,21 @@ class GridBody extends React.Component{
               </TableRow>
             )
           })}
+          {/**emptyRows > 0 && (
+            <TableRow style={{ height: 49 * emptyRows }}>
+              <TableCell colSpan={6} />
+            </TableRow>
+          )**/}
       </TableBody>
     )
   }
-
 }
+
+GridBody.propTypes = {
+  tableHeader: PropTypes.arrayOf(PropTypes.string),
+  tableData: PropTypes.arrayOf(PropTypes.any),
+  page: PropTypes.number.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
+}
+
 export default GridBody;

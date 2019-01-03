@@ -53,7 +53,10 @@ class TableList extends React.Component{
         <Button variant="contained" component="span" onClick={this.reset} >
           Reset
         </Button>
-        <Grid tableHeader={this.props.gridPage.data.header} tableData={this.props.gridPage.data.body} />
+        <Grid
+          tableHeader={this.props.gridPage.data.header}
+          tableData={this.props.gridPage.data.body}
+        />
       </>
     )
   }

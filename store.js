@@ -34,7 +34,6 @@ const reducers = combineReducers({
 
 //Actions
 export const initGrid = (props) => dispatch => {
-  // console.log(props.data)
   return dispatch({ type: gridActionTypes.INIT, data:props.data })
 }
 

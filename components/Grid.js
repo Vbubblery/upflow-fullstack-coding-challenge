@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
 
-import {Table,TableHead,TableRow,TableBody,TableCell} from '@material-ui/core';
+import {Paper,Table,TableHead,TableRow,TableBody,TableCell,TablePagination} from '@material-ui/core';
 
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
@@ -38,22 +38,55 @@ class Grid extends React.Component{
   constructor(props){
     super(props);
     this.classes = props.classes;
+    this.state = {
+      page:0,
+      rowsPerPage:10,
+    }
   };
 
   componentDidMount () {}
 
   componentWillUnmount () {}
 
+  handleChangePage = (event, page) => {
+    this.setState({ page });
+  };
+
+  handleChangeRowsPerPage = event => {
+    this.setState({ rowsPerPage: event.target.value });
+  };
+
   render(){
     const {tableHeader,tableData} = this.props;
+    const {rowsPerPage, page} = this.state;
     return(
       <>
-        <div className={this.classes.Responsive}>
+        <Paper className={this.classes.Responsive}>
           <Table className={this.classes.table}>
             <GridHeader tableHeader={tableHeader} />
-            <GridBody tableHeader={tableHeader} tableData={tableData} />
+            <GridBody
+              tableHeader={tableHeader}
+              tableData={tableData}
+              page={page}
+              rowsPerPage={rowsPerPage}
+            />
           </Table>
-        </div>
+          <TablePagination
+            rowsPerPageOptions={[10,20,30]}
+            component="div"
+            count={tableData.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            backIconButtonProps={{
+              'aria-label': 'Previous Page',
+            }}
+            nextIconButtonProps={{
+              'aria-label': 'Next Page',
+            }}
+            onChangePage={this.handleChangePage}
+            onChangeRowsPerPage={this.handleChangeRowsPerPage}
+          />
+        </Paper>
       </>
     )
   }
@@ -61,7 +94,7 @@ class Grid extends React.Component{
 
 Grid.propTypes = {
   tableHeader: PropTypes.arrayOf(PropTypes.string),
-
+  tableData: PropTypes.arrayOf(PropTypes.any)
 }
 
 export default withStyles(tableStyles)(Grid);
