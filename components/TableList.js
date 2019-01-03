@@ -19,10 +19,11 @@ class TableList extends React.Component{
 
   componentWillUnmount () {}
 
-  handleForce = csv => {
+  handleCSV= csv => {
     const {dispatch} = this.props;
-    const header = csv.shift();
-    dispatch(initGrid({data:{header:header,body:csv}}))
+    csv.map((row,key)=>{row.id=key});
+    const header = Object.keys(csv[0]);
+    dispatch(initGrid({data:{header:header,body:csv}}));
   }
 
   reset = (e) => {
@@ -34,9 +35,15 @@ class TableList extends React.Component{
     return(
       <>
         <CSVReader
-          onFileLoaded={this.handleForce}
+          onFileLoaded={this.handleCSV}
           inputStyle={{display: 'none'}}
           inputId="csv-reader"
+          parserOptions={{
+            header:true,
+            dynamicTyping:true,
+            comments:"#",
+            //fastMode:true
+          }}
         />
         <label htmlFor="csv-reader">
           <Button variant="contained" component="span">

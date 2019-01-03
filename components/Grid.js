@@ -6,6 +6,9 @@ import {Table,TableHead,TableRow,TableBody,TableCell} from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 
+import GridHeader from './GridAdvance/GridHeader';
+import GridBody from './GridAdvance/GridBody';
+
 const tableStyles = theme => ({
   Responsive: {
     width: "100%",
@@ -25,10 +28,6 @@ const tableStyles = theme => ({
     padding: "12px 8px",
     verticalAlign: "middle"
   },
-  tableHeadCell: {
-    color: "inherit",
-    fontSize: "1em"
-  },
   tableHeadBackGroundColor:{
     backgroundColor: "#2196f3"
   },
@@ -46,46 +45,13 @@ class Grid extends React.Component{
   componentWillUnmount () {}
 
   render(){
-    const TableHeader = this.props.tableHeader.map((prop,key)=>{
-      return (
-        <TableCell
-          className={classNames(this.classes.tableCell, this.classes.tableHeadCell)}
-          key={key}
-        >
-          {prop}
-        </TableCell>
-      )
-    });
-
-    const TableData = this.props.tableData.map((props,key)=>{
-      return(
-        <TableRow key={key}>
-          {props.map((prop,key)=>{
-            return(
-              <TableCell
-                className={this.classes.tableCell}
-                key={key}
-              >
-                {prop}
-              </TableCell>
-            )
-          })}
-        </TableRow>
-      )
-    });
-
+    const {tableHeader,tableData} = this.props;
     return(
       <>
         <div className={this.classes.Responsive}>
           <Table className={this.classes.table}>
-            <TableHead className={this.classes.tableHeadBackGroundColor}>
-              <TableRow>
-                {TableHeader}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {TableData}
-            </TableBody>
+            <GridHeader tableHeader={tableHeader} />
+            <GridBody tableHeader={tableHeader} tableData={tableData} />
           </Table>
         </div>
       </>
@@ -95,7 +61,7 @@ class Grid extends React.Component{
 
 Grid.propTypes = {
   tableHeader: PropTypes.arrayOf(PropTypes.string),
-  tableData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
+
 }
 
 export default withStyles(tableStyles)(Grid);
