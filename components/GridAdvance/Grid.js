@@ -85,6 +85,8 @@ class Grid extends React.Component{
               tableHeader={tableHeader}
               tableData={tableData}
               page={page}
+              order={order}
+              orderBy={orderBy}
               rowsPerPage={rowsPerPage}
             />
           </Table>

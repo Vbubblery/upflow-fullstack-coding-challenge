@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import {TableRow,TableBody,TableCell,TextField} from '@material-ui/core';
 
+import {stableSort,getSorting} from '../../lib/gridUtils';
 
 class GridBody extends React.Component{
   constructor(props){
@@ -22,11 +23,11 @@ class GridBody extends React.Component{
   };
 
   render(){
-    const {tableData,tableHeader,rowsPerPage,page} = this.props;
+    const {tableData,tableHeader,rowsPerPage,page,order,orderBy} = this.props;
     //const emptyRows = rowsPerPage - Math.min(rowsPerPage, tableData.length - page * rowsPerPage);
     return(
       <TableBody>
-        {tableData
+        {stableSort(tableData, getSorting(order, orderBy))
           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
           .map((row,key)=>{
             return(
