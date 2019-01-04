@@ -1,7 +1,7 @@
 import React from "react";
 
 // components
-import Grid from './Grid';
+import Grid from './GridAdvance/Grid';
 import CSVReader from "react-csv-reader";
 import {Button} from '@material-ui/core';
 

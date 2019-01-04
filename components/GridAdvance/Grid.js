@@ -6,14 +6,14 @@ import {Paper,Table,TableHead,TableRow,TableBody,TableCell,TablePagination} from
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 
-import GridHeader from './GridAdvance/GridHeader';
-import GridBody from './GridAdvance/GridBody';
+import GridHeader from './GridHeader';
+import GridBody from './GridBody';
 
 const tableStyles = theme => ({
   Responsive: {
-    width: "100%",
+    width: "50%",
     marginTop: theme.spacing.unit * 3,
-    overflowX: "auto"
+    overflowX: "auto",
   },
   table: {
     marginBottom: "0",
@@ -27,9 +27,6 @@ const tableStyles = theme => ({
     lineHeight: "1.42857143",
     padding: "12px 8px",
     verticalAlign: "middle"
-  },
-  tableHeadBackGroundColor:{
-    backgroundColor: "#2196f3"
   },
 })
 
@@ -59,6 +56,7 @@ class Grid extends React.Component{
   render(){
     const {tableHeader,tableData} = this.props;
     const {rowsPerPage, page} = this.state;
+
     return(
       <>
         <Paper className={this.classes.Responsive}>

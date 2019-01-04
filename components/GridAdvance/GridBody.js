@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
 
-import {TableRow,TableBody,TableCell} from '@material-ui/core';
+import {TableRow,TableBody,TableCell,TextField} from '@material-ui/core';
 
 
 class GridBody extends React.Component{
@@ -14,6 +14,12 @@ class GridBody extends React.Component{
 
   componentWillUnmount () {}
 
+  handleChange = (id,i)=>event =>{
+    // this.setState({
+    //   [id]: event.target.value,
+    // });
+    console.log(id+i)
+  };
 
   render(){
     const {tableData,tableHeader,rowsPerPage,page} = this.props;
@@ -26,7 +32,13 @@ class GridBody extends React.Component{
             return(
               <TableRow hover key={key}>
                 {tableHeader.map((i,key)=>{
-                  return(<TableCell align="left" key={key}>{row[i]}</TableCell>)
+                  return(
+                    <TableCell align="left" key={key}>
+                      <TextField
+                        value={row[i]}
+                        onChange={this.handleChange(row.id,i)}
+                       />
+                    </TableCell>)
                 })}
               </TableRow>
             )

@@ -24,7 +24,7 @@ class GridHeader extends React.Component{
           {tableHeader.map(item=>{
             return(
               <TableCell key={item}>
-                  {item}
+                {item}
               </TableCell>
             )
           },this)}
