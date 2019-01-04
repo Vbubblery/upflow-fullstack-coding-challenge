@@ -35,10 +35,7 @@ class GridBody extends React.Component{
                 {tableHeader.map((i,key)=>{
                   return(
                     <TableCell align="left" key={key}>
-                      <TextField
-                        value={row[i]}
-                        onChange={this.handleChange(row.id,i)}
-                       />
+                      {row[i]}
                     </TableCell>)
                 })}
               </TableRow>
