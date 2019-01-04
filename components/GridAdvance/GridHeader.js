@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
 
-import {TableHead,TableRow,TableCell} from '@material-ui/core';
-
+import {TableHead,TableRow,TableCell,TableSortLabel} from '@material-ui/core';
 
 class GridHeader extends React.Component{
   constructor(props){
@@ -14,17 +13,28 @@ class GridHeader extends React.Component{
 
   componentWillUnmount () {}
 
-
+  createSortHandler = property => event => {
+    this.props.onRequestSort(event, property);
+  };
 
   render(){
-    const {tableHeader} = this.props;
+    const {tableHeader,order,orderBy,rowCount} = this.props;
     return(
       <TableHead>
         <TableRow>
           {tableHeader.map(item=>{
             return(
-              <TableCell key={item}>
-                {item}
+              <TableCell
+                key={item}
+                sortDirection={orderBy === item ? order : false}
+              >
+                <TableSortLabel
+                  active={orderBy === item}
+                  direction={order}
+                  onClick={this.createSortHandler(item)}
+                >
+                  {item}
+                </TableSortLabel>
               </TableCell>
             )
           },this)}

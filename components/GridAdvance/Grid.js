@@ -38,6 +38,8 @@ class Grid extends React.Component{
     this.state = {
       page:0,
       rowsPerPage:10,
+      order: 'asc',
+      orderBy: props.tableHeader[0],
     }
   };
 
@@ -53,15 +55,32 @@ class Grid extends React.Component{
     this.setState({ rowsPerPage: event.target.value });
   };
 
+  handleRequestSort = (event, property) => {
+    const orderBy = property;
+    let order = 'desc';
+
+    if (this.state.orderBy === property && this.state.order === 'desc') {
+      order = 'asc';
+    }
+
+    this.setState({ order, orderBy });
+  };
+
   render(){
     const {tableHeader,tableData} = this.props;
-    const {rowsPerPage, page} = this.state;
+    const {rowsPerPage, page, order, orderBy} = this.state;
 
     return(
       <>
         <Paper className={this.classes.Responsive}>
           <Table className={this.classes.table}>
-            <GridHeader tableHeader={tableHeader} />
+            <GridHeader
+              tableHeader={tableHeader}
+              order={order}
+              orderBy={orderBy}
+              onRequestSort={this.handleRequestSort}
+              rowCount={tableData.length}
+            />
             <GridBody
               tableHeader={tableHeader}
               tableData={tableData}
