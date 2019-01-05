@@ -11,7 +11,7 @@ import GridBody from './GridBody';
 
 const tableStyles = theme => ({
   Responsive: {
-    width: "50%",
+    width: "100%",
     marginTop: theme.spacing.unit * 3,
     overflowX: "auto",
   },
@@ -39,7 +39,7 @@ class Grid extends React.Component{
       page:0,
       rowsPerPage:10,
       order: 'asc',
-      orderBy: props.tableHeader[0],
+      orderBy: 'id',
     }
   };
 

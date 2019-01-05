@@ -9,13 +9,23 @@ class GridBody extends React.Component{
   constructor(props){
     super(props);
     this.classes = props.classes;
+    this.state = {
+      editIdx:{
+        id:-1,
+        col:undefined,
+      },
+    }
   };
 
   componentDidMount () {}
 
   componentWillUnmount () {}
 
-  handleChange = (id,i)=>event =>{
+  startEditing = i => event => {
+    this.setState({ editIdx: i });
+  };
+
+  handleChange = (id,i)=> event =>{
     // this.setState({
     //   [id]: event.target.value,
     // });
@@ -24,6 +34,7 @@ class GridBody extends React.Component{
 
   render(){
     const {tableData,tableHeader,rowsPerPage,page,order,orderBy} = this.props;
+    const {editIdx} = this.state;
     //const emptyRows = rowsPerPage - Math.min(rowsPerPage, tableData.length - page * rowsPerPage);
     return(
       <TableBody>
@@ -31,11 +42,15 @@ class GridBody extends React.Component{
           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
           .map((row,key)=>{
             return(
-              <TableRow hover key={key}>
+              <TableRow hover key={key} >
                 {tableHeader.map((i,key)=>{
                   return(
-                    <TableCell align="left" key={key}>
-                      {row[i]}
+                    <TableCell align="left" key={key} onClick={this.startEditing({id:row.id,col:i})} >
+                      {((editIdx.id == row.id) && (editIdx.col == i))?(
+                        <TextField
+                          value={row[i]}
+                        />
+                      ):(row[i])}
                     </TableCell>)
                 })}
               </TableRow>
