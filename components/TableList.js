@@ -7,7 +7,7 @@ import {Button} from '@material-ui/core';
 
 // redux connect
 import {connect} from 'react-redux';
-import {initGrid, resetGrid } from '../store'
+import {initGrid, resetGrid,updateCell} from '../store'
 
 class TableList extends React.Component{
   constructor(props){
@@ -40,9 +40,9 @@ class TableList extends React.Component{
           inputId="csv-reader"
           parserOptions={{
             header:true,
-            dynamicTyping:true,
+            //dynamicTyping:true, //this is for auto-transform if the value is a number
             comments:"#",
-            //fastMode:true
+            fastMode:true
           }}
         />
         <label htmlFor="csv-reader">

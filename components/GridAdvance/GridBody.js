@@ -29,7 +29,7 @@ class GridBody extends React.Component{
     // this.setState({
     //   [id]: event.target.value,
     // });
-    console.log(id+i)
+    console.log(event.target.value)
   };
 
   render(){
@@ -49,6 +49,7 @@ class GridBody extends React.Component{
                       {((editIdx.id == row.id) && (editIdx.col == i))?(
                         <TextField
                           value={row[i]}
+                          onChange={this.handleChange(row.id,i)}
                         />
                       ):(row[i])}
                     </TableCell>)
