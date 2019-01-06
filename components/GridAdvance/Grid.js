@@ -47,6 +47,7 @@ class Grid extends React.Component{
 
   componentWillUnmount () {}
 
+
   handleChangePage = (event, page) => {
     this.setState({ page });
   };
@@ -62,14 +63,12 @@ class Grid extends React.Component{
     if (this.state.orderBy === property && this.state.order === 'desc') {
       order = 'asc';
     }
-
     this.setState({ order, orderBy });
   };
 
   render(){
     const {tableHeader,tableData} = this.props;
     const {rowsPerPage, page, order, orderBy} = this.state;
-
     return(
       <>
         <Paper className={this.classes.Responsive}>
@@ -88,6 +87,7 @@ class Grid extends React.Component{
               order={order}
               orderBy={orderBy}
               rowsPerPage={rowsPerPage}
+              handleCellChange={this.props.handleCellChange}
             />
           </Table>
           <TablePagination
@@ -112,8 +112,9 @@ class Grid extends React.Component{
 }
 
 Grid.propTypes = {
-  tableHeader: PropTypes.arrayOf(PropTypes.string),
-  tableData: PropTypes.arrayOf(PropTypes.any)
+  tableHeader: PropTypes.arrayOf(PropTypes.any),
+  tableData: PropTypes.arrayOf(PropTypes.any),
+  handleCellChange:PropTypes.any.isRequired,
 }
 
 export default withStyles(tableStyles)(Grid);

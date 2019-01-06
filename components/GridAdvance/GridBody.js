@@ -1,9 +1,11 @@
 import React from "react";
 import PropTypes from 'prop-types';
 
-import {TableRow,TableBody,TableCell,TextField} from '@material-ui/core';
+import {TableRow,TableBody,TableCell,TextField,Typography} from '@material-ui/core';
 
 import {stableSort,getSorting} from '../../lib/gridUtils';
+
+import {findById} from '../../lib/gridUtils';
 
 class GridBody extends React.Component{
   constructor(props){
@@ -26,18 +28,21 @@ class GridBody extends React.Component{
   };
 
   handleChange = (id,i)=> event =>{
-    // this.setState({
-    //   [id]: event.target.value,
-    // });
-    console.log(event.target.value)
+    this.props.tableData.find(findById,id)[i] = event.target.value;
+    this.props.handleCellChange(this.props.tableData);
   };
 
+  onActive=(event)=>{
+    if(event.key=='Escape'){
+      this.setState({ editIdx:{id:-1,col:undefined,}, });
+    }
+  }
   render(){
     const {tableData,tableHeader,rowsPerPage,page,order,orderBy} = this.props;
     const {editIdx} = this.state;
     //const emptyRows = rowsPerPage - Math.min(rowsPerPage, tableData.length - page * rowsPerPage);
     return(
-      <TableBody>
+      <TableBody >
         {stableSort(tableData, getSorting(order, orderBy))
           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
           .map((row,key)=>{
@@ -49,9 +54,14 @@ class GridBody extends React.Component{
                       {((editIdx.id == row.id) && (editIdx.col == i))?(
                         <TextField
                           value={row[i]}
+                          autoFocus={true}
+                          helperText="press esc for exit"
+                          onKeyDown={this.onActive}
+                          defaultValue={undefined}
+                          disabled={i=='id'?true:false}
                           onChange={this.handleChange(row.id,i)}
                         />
-                      ):(row[i])}
+                      ):(<Typography variant="body2">{row[i]}</Typography>)}
                     </TableCell>)
                 })}
               </TableRow>

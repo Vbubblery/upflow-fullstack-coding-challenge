@@ -7,7 +7,7 @@ import {Button} from '@material-ui/core';
 
 // redux connect
 import {connect} from 'react-redux';
-import {initGrid, resetGrid,updateCell} from '../store'
+import {initGrid, updateGrid} from '../store'
 
 class TableList extends React.Component{
   constructor(props){
@@ -23,12 +23,17 @@ class TableList extends React.Component{
     const {dispatch} = this.props;
     csv.map((row,key)=>{row.id=key});
     const header = Object.keys(csv[0]);
-    dispatch(initGrid({data:{header:header,body:csv}}));
+    dispatch(updateGrid({data:{header:header,body:csv}}));
   }
 
   reset = (e) => {
     const {dispatch} = this.props;
     dispatch(resetGrid());
+  }
+
+  handleCellChange = props =>{
+    const {dispatch} = this.props;
+    dispatch(updateGrid({data:{header:this.props.gridPage.data.header,body:props}}));
   }
 
   render(){
@@ -56,6 +61,7 @@ class TableList extends React.Component{
         <Grid
           tableHeader={this.props.gridPage.data.header}
           tableData={this.props.gridPage.data.body}
+          handleCellChange={this.handleCellChange}
         />
       </>
     )

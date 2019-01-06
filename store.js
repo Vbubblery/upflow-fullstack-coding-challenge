@@ -2,8 +2,6 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunkMiddleware from 'redux-thunk';
 
-import {findById} from './lib/gridUtils';
-
 const initialState = {
   gridPage:{
     data:{
@@ -14,15 +12,14 @@ const initialState = {
 };
 
 const gridActionTypes = {
-  INIT: 'INIT',
+  UPDATE: 'UPDATE',
   RESET: 'RESET',
-  UPDATECELL:'UPDATECELL',
 };
 
 // Reducers
 const gridReducer = (state = initialState, action) => { // state include the current state value.
   switch (action.type) {
-    case gridActionTypes.INIT:
+    case gridActionTypes.UPDATE:
       return {...state, gridPage:{...state.gridPage,data:action.data}}
     case gridActionTypes.RESET:
       return {...state, gridPage:initialState.gridPage}
@@ -36,18 +33,14 @@ const reducers = combineReducers({
 });
 
 //Actions
-export const initGrid = (props) => dispatch => {
-  return dispatch({ type: gridActionTypes.INIT, data:props.data })
+export const updateGrid = (props) => dispatch => {
+  return dispatch({ type: gridActionTypes.UPDATE, data:props.data })
 }
 
 export const resetGrid = (props) => dispatch => {
   return dispatch({ type: gridActionTypes.RESET })
 }
 
-export const updateCell = (props) => dispatch =>{
-  console.log()
-  // return dispatch({type:gridActionTypes.UPDATECELL,})
-}
 
 export const initializeStore = (initialState = initialState) => {
   return createStore(reducers, initialState,composeWithDevTools(applyMiddleware(thunkMiddleware)))
