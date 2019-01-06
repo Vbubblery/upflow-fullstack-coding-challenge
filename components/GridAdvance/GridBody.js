@@ -51,14 +51,14 @@ class GridBody extends React.Component{
                 {tableHeader.map((i,key)=>{
                   return(
                     <TableCell align="left" key={key} onClick={this.startEditing({id:row.id,col:i})} >
-                      {((editIdx.id == row.id) && (editIdx.col == i))?(
+                      {((editIdx.id == row.id) && (editIdx.col == i) && (i !='id'))?(
                         <TextField
                           value={row[i]}
                           autoFocus={true}
                           helperText="press esc for exit"
                           onKeyDown={this.onActive}
                           defaultValue={undefined}
-                          disabled={i=='id'?true:false}
+                          // disabled={i =='id'?true:false}
                           onChange={this.handleChange(row.id,i)}
                         />
                       ):(<Typography variant="body2">{row[i]}</Typography>)}
