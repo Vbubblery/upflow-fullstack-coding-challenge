@@ -7,7 +7,7 @@ import {Button} from '@material-ui/core';
 
 // redux connect
 import {connect} from 'react-redux';
-import {initGrid, updateGrid} from '../store'
+import {resetGrid, updateGrid} from '../store'
 
 class TableList extends React.Component{
   constructor(props){

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
 
-import {TableHead,TableRow,TableCell,TableSortLabel} from '@material-ui/core';
+import {TableHead,TableRow,TableCell,TableSortLabel,Checkbox} from '@material-ui/core';
 
 class GridHeader extends React.Component{
   constructor(props){
@@ -22,6 +22,10 @@ class GridHeader extends React.Component{
     return(
       <TableHead>
         <TableRow>
+          <TableCell padding="checkbox">
+            <Checkbox disabled={true}
+            />
+        </TableCell>
           {tableHeader.map(item=>{
             return(
               <TableCell

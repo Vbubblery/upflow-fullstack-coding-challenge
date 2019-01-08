@@ -8,6 +8,9 @@ import classNames from 'classnames';
 
 import GridHeader from './GridHeader';
 import GridBody from './GridBody';
+import GridToolBar from './GridToolBar';
+
+import {findById} from '../../lib/gridUtils';
 
 const tableStyles = theme => ({
   Responsive: {
@@ -40,6 +43,7 @@ class Grid extends React.Component{
       rowsPerPage:10,
       order: 'asc',
       orderBy: 'id',
+      selected: [],
     }
   };
 
@@ -56,6 +60,27 @@ class Grid extends React.Component{
     this.setState({ rowsPerPage: event.target.value });
   };
 
+  handleCheckClick = (id) => {
+    const { selected } = this.state;
+    const selectedIndex = selected.indexOf(id);
+    let newSelected = [];
+
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, id);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1),
+      );
+    }
+    //
+    this.setState({ selected: newSelected });
+  };
+
   handleRequestSort = (event, property) => {
     const orderBy = property;
     let order = 'desc';
@@ -66,12 +91,26 @@ class Grid extends React.Component{
     this.setState({ order, orderBy });
   };
 
+  handleDelete = () => {
+    const {tableData} = this.props;
+    let newSelected = [];
+    this.state.selected.map(i=>{
+      var index = tableData.indexOf(tableData.find(findById,i))
+      if (index > -1) {
+        tableData.splice(index, 1);
+      }
+    })
+    this.props.handleCellChange(tableData);
+    this.setState({ selected: newSelected });
+  }
+
   render(){
-    const {tableHeader,tableData} = this.props;
-    const {rowsPerPage, page, order, orderBy} = this.state;
+    const {tableHeader,tableData,handleCellChange} = this.props;
+    const {rowsPerPage, page, order, orderBy,selected} = this.state;
     return(
       <>
         <Paper className={this.classes.Responsive}>
+          <GridToolBar numSelected={selected.length} handleDelete={this.handleDelete} />
           <Table className={this.classes.table}>
             <GridHeader
               tableHeader={tableHeader}
@@ -87,7 +126,9 @@ class Grid extends React.Component{
               order={order}
               orderBy={orderBy}
               rowsPerPage={rowsPerPage}
-              handleCellChange={this.props.handleCellChange}
+              handleCellChange={handleCellChange}
+              selected={selected}
+              handleCheckClick={this.handleCheckClick}
             />
           </Table>
           <TablePagination

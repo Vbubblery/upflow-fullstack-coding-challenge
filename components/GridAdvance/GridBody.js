@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
 
-import {TableRow,TableBody,TableCell,TextField,Typography} from '@material-ui/core';
+import {TableRow,TableBody,TableCell,TextField,Typography,Checkbox} from '@material-ui/core';
 
 import {stableSort,getSorting} from '../../lib/gridUtils';
 
@@ -33,10 +33,18 @@ class GridBody extends React.Component{
   };
 
   onActive=(event)=>{
+    console.log(event.key)
     if(event.key=='Escape'){
       this.setState({ editIdx:{id:-1,col:undefined,}, });
     }
   }
+
+  isSelected = id => this.props.selected.indexOf(id) !== -1;
+
+  checkOnChange = id => event =>{
+    this.props.handleCheckClick(id)
+  }
+
   render(){
     const {tableData,tableHeader,rowsPerPage,page,order,orderBy} = this.props;
     const {editIdx} = this.state;
@@ -46,8 +54,12 @@ class GridBody extends React.Component{
         {stableSort(tableData, getSorting(order, orderBy))
           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
           .map((row,key)=>{
+            const isSelected = this.isSelected(row.id);
             return(
-              <TableRow hover key={key} >
+              <TableRow hover key={key} role="checkbox" aria-checked={isSelected} tabIndex={-1} selected={isSelected}>
+                <TableCell padding="checkbox">
+                  <Checkbox checked={isSelected} onChange={this.checkOnChange(row.id)} />
+                </TableCell>
                 {tableHeader.map((i,key)=>{
                   return(
                     <TableCell align="left" key={key} onClick={this.startEditing({id:row.id,col:i})} >
