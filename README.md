@@ -1,5 +1,7 @@
 # upflow-fullstack-coding-challenge
 
+demo: https://grid-vbubblery.herokuapp.com/
+
 ## Problem Statement
 Construct a re-usable datagrid component in React supported by a light-weight server using node.js.
 
@@ -25,3 +27,14 @@ Construct a re-usable datagrid component in React supported by a light-weight se
 
 ### Submission details
 Please share your code in a repo
+
+
+## Technologies
+
+nodejs
+Typescript
+postsc
+react,
+graphql,
+d3.js
+ag-grid
